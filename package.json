@@ -1,5 +1,6 @@
 {
   "name": "csaigmc-front",
+  "homepage": "https://csaigmc.github.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

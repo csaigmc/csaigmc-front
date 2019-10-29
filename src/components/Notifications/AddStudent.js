@@ -3,6 +3,9 @@ import 'assets/css/theme.css'
 import { useMutation } from '@apollo/react-hooks'
 import { usePageLoadingContext } from 'context'
 import gql from 'graphql-tag'
+import { Grid, Snackbar, TextField, Typography, Button, SnackbarContent, FormControl, FormHelperText } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+import {green, red} from '@material-ui/core/colors'
 
 const InputBox = ({label, value, onChange, name, placeholder}) => {
     return (
@@ -33,7 +36,20 @@ mutation AddStudent($student: InpStudent!) {
 }
 `
 
+const useStyles = makeStyles(theme => ({
+    error: {
+        background: red[800],
+        color: red[200]
+    },
+    success: {
+        background: green[800],
+        color: green[200]
+    }
+}))
+
 const AddStudent = () => {
+
+    const classes = useStyles()
 
     const [formValue, setFormValue] = useState({
         roll_no: "",
@@ -60,85 +76,113 @@ const AddStudent = () => {
 
     useEffect(() => {
         if(addStudentDetails && sup.loading == false && shouldShow === true){
-            setMessage(sup.error ? "Error Adding Details. Make sure your phone number is 10 digits long" : "Added Student Details")
+            setMessage(sup.error ? "Error Adding Details. Make sure all the details are valid!" : "Added Student Details")
             setShowingMessage(true)
             setLoading(false)
         } 
     }, [sup.loading])
 
+    const handleSubmit = () => {
+        setShowingMessage(false)
+        setLoading(true)
+        setShouldShow(true)
+        addStudentDetails({
+            variables: {student: formValue}
+        })
+    }
+
     return (
-        <div className="container pt-2">
-            <div className="row">
-            {showingMessage ? <div className="col-12 border-0 rounded p-2 font-main" style={{border: `2px solid ${message.includes('Error') ? "#c43b3d40" : "#3bc46040"}`, backgroundColor: `${message.includes('Error') ? "#c43b3d40" : "#3bc46040"}`}}>{message}</div> : null}
-            <div className="col-12 container-fluid font-head mt-2 text-center">Student Form</div>
-            <form onSubmit={(e) => {
-                e.preventDefault()
-                setShowingMessage(false)
-                setLoading(true)
-                setShouldShow(true)
-                addStudentDetails({
-                    variables: {student: formValue}
-                })
-            }} className="col-12">
-                <div className="col-12">
-                    <InputBox 
-                        label="Roll No"
-                        value={formValue.roll_no}
-                        onChange={handleChange}
-                        name="roll_no"
-                        placeholder="Roll No"/>
-                    </div>
-                <div className="col-12 py-1">
-                    <InputBox 
+        <Grid container>
+            <Snackbar anchorOrigin={{vertical: "top", horizontal: "right"}} open={showingMessage} autoHideDuration={1000} onClose={() => setShowingMessage(false)}>
+                <SnackbarContent 
+                 message={message}
+                 className={message.includes('Error') ? classes.error : classes.success}/>
+            </Snackbar>
+            <Grid item xs={12} style={{textAlign: "center", fontFamily: "Comfortaa, sans-serif"}}>
+                <Typography variant="h5" style={{paddingTop: "12px", paddingBottom: "12px"}}>Student Form</Typography>
+            </Grid>
+            <Grid item xs={12}>
+            <form onSubmit={handleSubmit}>
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                <TextField 
+                    fullWidth
+                    variant="outlined"
+                    label="Roll No"
+                    value={formValue.roll_no}
+                    onChange={handleChange}
+                    name="roll_no"
+                    placeholder="Roll No"/>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <TextField 
+                        fullWidth
+                        variant="outlined"
                         label="First Name"
                         value={formValue.first_name}
                         onChange={handleChange}
                         name="first_name"/>
-                </div>
-                <div className="col-12 py-1">
-                <InputBox 
-                    label="Last Name"
-                    value={formValue.last_name}
-                    onChange={handleChange}
-                    name="last_name"
-                    placeholder="Last Name"/>
-                </div>
-                <div className="col-12 py-1">
-                <InputBox 
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Last Name"
+                        value={formValue.last_name}
+                        onChange={handleChange}
+                        name="last_name"
+                        placeholder="Last Name"/>
+                </Grid>
+                <Grid item xs={2}>
+                <TextField
+                    fullWidth 
+                    variant='outlined'
                     label="Country Code"
                     value={formValue.country_code}
                     onChange={handleChange}
                     name="country_code"
                     placeholder="Country Code"/>
-                </div>
-                <div className="col-12 py-1">
-                <InputBox 
-                    label="Phone No"
-                    value={formValue.phone_no}
-                    onChange={handleChange}
-                    name="phone_no"
-                    placeholder="Phone No"/>
-                </div>
-                <div className="col-12 py-1">
-                <InputBox 
+                </Grid>
+                <Grid item xs={10} >
+                    <FormControl fullWidth>
+                    <TextField
+                        fullWidth
+                        variant="outlined" 
+                        label="Phone No"
+                        value={formValue.phone_no}
+                        onChange={handleChange}
+                        name="phone_no"
+                        placeholder="Phone No"/>
+                        <FormHelperText>Phone number must be 10 digits long.</FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                <TextField 
+                    fullWidth
+                    variant="outlined"
                     label="Father's Name"
                     value={formValue.father_name}
                     onChange={handleChange}
                     name="father_name"
                     placeholder="Father Name"/>
-                </div>
-                <div className="col-12 py-1">
-                <InputBox 
+                </Grid>
+                <Grid item xs={12} md={6}>
+                <TextField 
+                    fullWidth
+                    variant="outlined"
                     label="Mother's Name"
                     value={formValue.mother_name}
                     onChange={handleChange}
                     name="mother_name"
                     placeholder="Mother Name"/>
-                </div>
-                <button className="font-head border-0 bg-secondary-main bg-secondary-light-hover rounded px-2 py-1 text-primary-dark" style={{cursor: "pointer"}}>Submit</button>
+                </Grid>
+                <Grid xs={12} style={{paddingTop: "16px"}}>
+                    <Button variant="contained" onClick={() => handleSubmit()}>Submit</Button>
+                </Grid>
+                </Grid>
                 </form>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 

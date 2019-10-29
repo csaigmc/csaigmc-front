@@ -1,16 +1,27 @@
 import React from 'react'
+import { Grid, Chip, makeStyles } from '@material-ui/core'
+import { FONTS_HEAD } from 'App'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        fontFamily: FONTS_HEAD,
+        marginLeft: theme.spacing(1),
+        fontWeight: 700
+    }
+}))
 
 const Tab = ({text, isActive, onChange}) => {
+
+    const classes = useStyles() 
+
     return (
-        <div onClick={onChange} className='d-inline-block px-2'>
-            <div className="font-head small py-2 font-weight-bolder" style={{cursor: "pointer", borderBottom: `2px solid ${isActive ? "var(--secondary-main)" : "#00000000"}`}}>{text}</div>
-        </div>
+        <Chip onClick={onChange} className={classes.root} label={text} variant={isActive ? "default": "outlined"} color={isActive ? "secondary" : "default"} />
     )
 }
 
 export const Tabs = ({tabList, currentTab, onChange}) => {
     return (
-        <div className="px-3" style={{borderBottom: "0.5px solid #fffffff0", paddingBottom: "0.6px"}}>
+        <Grid style={{paddingBottom: "24px"}}>
             {
                 tabList.map((item, index) => {
                     return (
@@ -18,6 +29,6 @@ export const Tabs = ({tabList, currentTab, onChange}) => {
                     )
                 })
             }
-        </div>
+        </Grid>
     )
 }

@@ -4,6 +4,8 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
+import { makeStyles, Grid, Divider, Link } from '@material-ui/core'
+import { FONTS_HEAD } from 'App'
 
 
 const AddStudent = lazy(() => import('components/Notifications/AddStudent'))
@@ -19,7 +21,48 @@ query AllNotifications($options: InpOptions) {
 }
 `
 
+const notifStyles = makeStyles(theme => ({
+    notif: {
+        padding: theme.spacing(1),
+        background: theme.palette.primary.dark,
+        marginTop: '1px',
+        marginBottom: '1px',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '4px',
+            marginBottom: '4px'
+        }
+    },
+    undisplay: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
+    },
+    notifItem: {
+        padding: theme.spacing(1),
+        [theme.breakpoints.down('sm')]: {
+            padding: 0
+        }
+    },
+    spacers: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2)
+    },
+    rounders: {
+        borderRadius: theme.spacing(1),
+        overflow: "hidden"
+    },
+    clickableLink: {
+        fontFamily: FONTS_HEAD,
+        color: theme.palette.secondary.main,
+        '&:hover': {
+            color: theme.palette.secondary.light
+        }
+    }
+}))
+
 const MyNotifs = () => {
+
+    const classes = notifStyles()
     
     const {data, loading, error, fetchMore} = useQuery(GET_NOTIFICATIONS)
     const {setLoading} = usePageLoadingContext()
@@ -35,6 +78,14 @@ const MyNotifs = () => {
     }, [loading])
     
     let ToRender
+    if(loading){
+        ToRender = (
+            <Grid container>
+                <Grid item xs={12}>                    
+                </Grid>
+            </Grid>
+        )
+    }
     if(data) {
         ToRender = (
             <InfiniteScroll
@@ -58,14 +109,12 @@ const MyNotifs = () => {
                     const fdate = `${mon}/${day}/${year}`
 
                     return (
-                        <div className="container-fluid">
-                            <div className="row bg-primary-light my-1 rounded font-head">
-                                <div className="col-12 col-md-1 py-md-2">{index}</div>
-                                <div className="col-12 col-md-8 py-md-2">{item.notification_text}</div>
-                                <div className="col-12 col-md-1 py-md-2"><a className="text-secondary-light text-secondary-dark-hover" href={item.notification_url}>More</a></div>
-                                <div className="col-12 col-md-2 py-md-2">{fdate}</div>
-                            </div>
-                        </div>
+                        <Grid container className={`${classes.notif} ${classes.rounders}`} xs={12}>
+                            <Grid item className={`${classes.notifItem} ${classes.undisplay}`} xs={12} md={1} lg={1}>{index}</Grid>
+                            <Grid item className={classes.notifItem} xs={12} md={8} lg={9}>{item.notification_text}</Grid>
+                            <Grid item className={classes.notifItem} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
+                            <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}>More</Link></Grid>
+                        </Grid>
                     )
                 })
             }
@@ -76,11 +125,19 @@ const MyNotifs = () => {
     }
 
     return (
-        <div className="container-fluid">
+        <Grid container className={classes.spacers}>
+            <Grid item xs={12} >
             {ToRender}
-        </div>
+            </Grid>
+        </Grid>
     )
 }
+
+const useStyles = makeStyles(theme => {
+    root: {
+        margin: theme.spacing(100)
+    }
+})
 
 const Notifications = () => {
 
@@ -94,17 +151,15 @@ const Notifications = () => {
         case 1:
             ToRender = <AddStudent />
             break;
-        default:
-            break;
     }
 
-    console.log(ToRender)
+    const styles = useStyles()
 
     return (
-        <>
+        <Grid container>
             <Tabs tabList={["Notifications", "Add Student"]} currentTab={currentTab} onChange={(index) => setCurrentTab(index)} />
             {ToRender}
-        </>
+        </Grid>
     )
 }
 

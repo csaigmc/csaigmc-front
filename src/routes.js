@@ -9,7 +9,7 @@ const Gallery =  lazy(() => import('components/Gallery/Gallery'))
 export const Routes = {
     '/home': () => <Home />,
     '/notifications': () => <Notifications />,
-    '/clubs': () => <Clubs />,
-    '/aboutus': () => <About />,
+    '/clubs*': () => <Clubs />,
+    '/about': () => <About />,
     '/gallery': () => <Gallery />
 }

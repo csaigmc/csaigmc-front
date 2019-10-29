@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Displayer } from 'components/Displayer'
+import { Grid } from '@material-ui/core'
 
 const ADVISORY_QUERY = gql`
 query allAdvisory($options: InpOptions) {
@@ -17,14 +18,16 @@ query allAdvisory($options: InpOptions) {
 `
 const Gallery = () => {
     return (
-        <div className="container-fluid">
-        <Displayer
-            queryObject={{
-                query_query: ADVISORY_QUERY,
-                query_params: "gallery",
-                query_tablename: "allArts"
-            }}/>
-        </div>
+        <Grid container>
+            <Grid item xs={12}>
+                <Displayer
+                    queryObject={{
+                        query_query: ADVISORY_QUERY,
+                        query_params: "gallery",
+                        query_tablename: "allArts"
+                    }}/>
+            </Grid>
+        </Grid>
     )
 }
 

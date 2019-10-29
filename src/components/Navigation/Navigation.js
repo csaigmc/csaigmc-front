@@ -5,7 +5,8 @@ import {FONTS_HEAD, FONTS_MAIN} from 'App'
 import './Navigation.css'
 import { Loading } from 'components/Loading'
 import { usePageLoadingContext } from 'context'
-import { AppBar, Toolbar, IconButton, Icon, Typography, Drawer, List, ListSubheader, ListItem, ListItemText, Divider, Collapse, makeStyles, LinearProgress } from '@material-ui/core'
+import IGMCAvatar from 'assets/images/igmc_menu.jpg'
+import { AppBar, Toolbar, IconButton, Icon, Typography, Drawer, List, ListSubheader, ListItem, ListItemText, Divider, Collapse, makeStyles, LinearProgress, ListItemAvatar, Avatar } from '@material-ui/core'
 
 const ustyles = makeStyles(theme => ({
     root:{
@@ -82,7 +83,14 @@ export const Navigation = () => {
         <Drawer open={open} onClose={() => setOpen(false)}>
             <div className={styles.root} role="presentation">
             <List component="nav" aria-labelledby="menu" subheader={
-                <ListSubheader component='div' id="menu">Menu</ListSubheader>
+                <ListItem>
+                        <ListItemAvatar>
+                            <Avatar src={IGMCAvatar} style={{display: 'inline-block'}} /> 
+                        </ListItemAvatar>
+                        <ListItemText 
+                        disableTypography
+                        primary={<Typography className={styles.listItemText}>Menu</Typography>} />
+                </ListItem>
             }>
                 <Divider />
                 {([

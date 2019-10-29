@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Grid, makeStyles, Typography, Dialog, AppBar, Toolbar, IconButton, Icon, Container } from '@material-ui/core'
-
+import Slide from '@material-ui/core/Slide';
 
 const infoStyles = makeStyles(theme => ({
     infoContainer: { 
@@ -113,6 +113,11 @@ const InfoCard = ({showInfo, info, handleClick}) => {
     )
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
 const Detailstyles = makeStyles(theme => ({
     title: {
         fontFamily: FONTS_HEAD,
@@ -151,7 +156,7 @@ const DetailsRenderer = ({showing, info, handleClose}) => {
     const classes = Detailstyles()
 
     return (
-        <Dialog fullScreen open={showing} onClose={() => handleClose()}>
+        <Dialog fullScreen open={showing} TransitionComponent={Transition} onClose={() => handleClose()}>
             <AppBar position="fixed">
                 <Toolbar>
                     <IconButton onClick={() => handleClose()}>

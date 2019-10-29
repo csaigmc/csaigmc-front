@@ -25,7 +25,7 @@ const ustyles = makeStyles(theme => ({
         }
     },
     listItemText: {
-        fontFamily: FONTS_MAIN,
+        fontFamily: FONTS_HEAD,
     },
     nestedItem: {
         paddingLeft: theme.spacing(4)
@@ -92,12 +92,20 @@ export const Navigation = () => {
                 ]).map((item, index) => {
                     return (
                         <ListItem button key={index} className={styles.listItem} component={A} href={`/${item.toLowerCase()}`}>
-                            <ListItemText primary={item} />
+                            <ListItemText 
+                                disableTypography 
+                                primary={
+                                    <Typography className={styles.listItemText}>{item}</Typography>
+                                }/>
                         </ListItem>
                     )
                 })}
                 <ListItem className={styles.listItem} button onClick={() => setCollapseOpen(!collapseOpen)}>
-                    <ListItemText primary="Clubs" />
+                    <ListItemText 
+                        disableTypography 
+                        primary={
+                            <Typography className={styles.listItemText}>Clubs</Typography>
+                        }/>
                     <Icon>
                         {
                             collapseOpen ? 
@@ -116,14 +124,22 @@ export const Navigation = () => {
                     ]).map((item, index) => {
                         return (
                             <ListItem className={`${styles.listItem} ${styles.nestedItem}`} button key={index} component={A} href={`/clubs/${item.toLowerCase()}`}>
-                                <ListItemText className={styles.listItemText} primary={item} />
+                                <ListItemText 
+                                    disableTypography 
+                                    primary={
+                                        <Typography className={styles.listItemText}>{item}</Typography>
+                                    }/>
                             </ListItem>
                         )
                     })}
                     </List>
                 </Collapse>
                 <ListItem button component={A} href={`/about`} className={styles.listItem}>
-                    <ListItemText primary="About Us" className={styles.listItemText} />
+                    <ListItemText
+                        disableTypography 
+                        primary={
+                            <Typography className={styles.listItemText}>About Us</Typography>
+                        }/>
                 </ListItem>
             </List>
             </div>

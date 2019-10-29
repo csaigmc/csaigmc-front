@@ -10,3 +10,9 @@
     text-align: center;
     max-height: 360px;
 }
+
+.react-article-source p {
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}

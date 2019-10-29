@@ -20,7 +20,7 @@ const About = () => {
     return (
         <Grid container>
             <Grid item xs={12} style={{textAlign: 'center'}}> 
-                <img src={IGMC} style={{borderRadius: "2px", filter: 'brightness(80%)'}} />
+                <img src={IGMC} style={{borderRadius: "2px", maxWidth: "100%", filter: 'brightness(80%)'}} />
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="body1" className={classes.about} >

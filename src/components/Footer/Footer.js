@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     },
     padder: {
         paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(2)
     },
     ccontainer: {
         position: "relative",
@@ -19,6 +20,27 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
         backgroundColor: theme.palette.primary.dark
+    },
+    followus: {
+        color: theme.palette.grey[400]
+    },
+    socialicon: {
+        fontSize: 20,
+        marginLeft: "6px",
+        marginRight: "6px",
+        color: theme.palette.grey[400]
+    },
+    instagram : {
+        '&:hover': {
+            color: `#405DE6`
+        }
+    },
+    submit_complaint_here : {
+        cursor: 'pointer',
+        color: theme.palette.secondary.light,
+        '&:hover': {
+            color: theme.palette.secondary.dark,
+        }
     }
 })) 
 
@@ -36,7 +58,13 @@ export const Footer = () => {
                 </Grid> :
                 null
             }
-            <Grid item className={ path === '/home' ? classes.padder : ""} xs={12} style={{textAlign: "center"}}>
+            <Grid item xs={12} className={`${path === '/home' ? classes.padder : ""} ${classes.followus}`} style={{textAlign: 'center'}}>
+                <Typography variant="subtitle1" style={{fontFamily: "comfortaa"}}>Follow us on Social Media:</Typography> 
+                <Link className={`${classes.socialicon} ${classes.instagram}`} href="https://instagram.com/atelier_igmc?igshid=3y1d6zzji3ta"><i className="fab fa-instagram"></i></Link>
+                <Link className={`${classes.socialicon}`} href="#"><i className="fab fa-twitter"></i></Link>
+                <Link className={`${classes.socialicon}`} href="#"><i className="fab fa-facebook-f "></i></Link>
+            </Grid>
+            <Grid item xs={12} style={{textAlign: "center", paddingTop: "16px", paddingBottom: "16px"}}>
                 <Typography variant='body1' className={classes.fontmain} style={{textAlign: 'center', fontSize: "12px"}} >CopyRight &copy; 2019 CSAIGMC. All rights reserved.</Typography>
             </Grid>
         </Grid>

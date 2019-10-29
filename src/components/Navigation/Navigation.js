@@ -37,7 +37,8 @@ const paths = {
     '/home': "Home",
     '/notifications': "Notifications",
     '/gallery': 'Gallery',
-    '/about': "About IGMC"
+    '/about': "About IGMC",
+    '/complaints': "Complaints"
 }
 
 const MenuItem = ({text, link}) => {
@@ -96,7 +97,8 @@ export const Navigation = () => {
                 {([
                     'Home',
                     'Gallery',
-                    'Notifications'
+                    'Notifications',
+                    'Complaints'
                 ]).map((item, index) => {
                     return (
                         <ListItem button key={index} className={styles.listItem} component={A} href={`/${item.toLowerCase()}`}>

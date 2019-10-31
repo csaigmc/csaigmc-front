@@ -12,6 +12,7 @@ import Slide from '@material-ui/core/Slide';
 const infoStyles = makeStyles(theme => ({
     infoContainer: { 
         padding: theme.spacing(1),
+        border: `1px solid ${theme.palette.grey[700]}`,
         borderRadius: "0px",
         overflow: "hidden",
         transition: "0.14s all ease-in-out",
@@ -85,7 +86,7 @@ const InfoCard = ({showInfo, info, handleClick}) => {
     console.log(image)
 
     return (
-        <Grid item xs={12} sm={6} md={4} className={classes.infoContainer} onClick={handleClick}>
+        <Grid item xs={12} sm={6} md={3} className={classes.infoContainer} onClick={handleClick}>
             <Grid container>
                 {image ? <img className={classes.imazo} src={image} /> : null}
                 <Grid item xs={12} style={{paddingTop: "8px"}}>

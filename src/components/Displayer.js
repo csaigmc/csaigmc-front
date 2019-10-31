@@ -42,7 +42,7 @@ const InfoCard = ({showInfo, info}) => {
     const classes = infoStyles()
 
     return (
-        <Grid item xs={12} sm={6} md={4} className={classes.infoContainer}>
+        <Grid item xs={12} sm={6} md={3} className={classes.infoContainer}>
             <img className={classes.imazo} src={info.url_path} />
             {
                 showInfo ? <Grid container>

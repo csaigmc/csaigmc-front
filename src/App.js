@@ -70,8 +70,8 @@ const App = () => {
           <Container style={{paddingTop: "84px"}}>
             {routesResult || <NotFound />}
           </Container>
+          <Footer />
         </Suspense>
-        <Footer />
       </Fragment>
     </ApolloProvider>
     </ThemeProvider>

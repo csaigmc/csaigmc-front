@@ -2,6 +2,7 @@ import React, {useState, lazy} from 'react'
 import 'assets/css/theme.css'
 import { Tabs } from 'components/TabsList'
 import { Grid } from '@material-ui/core'
+import { Footer } from 'components/Footer/Footer'
 const AddComplaints = lazy(() => import('components/Complaints/AddComplaints'))
 const SearchComplaints = lazy(() => import('components/Complaints/SearchComplaints'))
 
@@ -21,6 +22,7 @@ const Complaints = () => {
     }
 
     return (
+        <>
         <Grid container>
             <Tabs tabList={["Add Complaint", "Search Complaint"]} currentTab={currentTab} onChange={(index) => {
                 setCurrentTab(index)
@@ -31,6 +33,7 @@ const Complaints = () => {
                 </Grid>
             </Grid>
         </Grid>
+        </>
     )
 }
 

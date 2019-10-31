@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { Grid, Typography } from '@material-ui/core'
 import { FONTS_HEAD } from 'App'
 import { makeStyles } from '@material-ui/styles'
+import { Footer } from './Footer/Footer'
 
 const infoStyles = makeStyles(theme => ({
     infoContainer: {
@@ -71,12 +72,18 @@ const DisplayStyle = makeStyles(theme => ({
         color: theme.palette.grey[600],
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5)
+    },
+    loading_display: {
+        fontFamily: FONTS_HEAD,
+        fontSize: '16px',
+        color: theme.palette.grey[400]
     }
 }))
 
 export const Displayer = ({queryObject, shouldDisplayInfo}) => {
 
     const classes = DisplayStyle()
+    const [hasMore, setHasMore] = useState(true)
 
     const {data, error, loading, fetchMore} = useQuery(queryObject.query_query, {
         variables: {
@@ -94,6 +101,9 @@ export const Displayer = ({queryObject, shouldDisplayInfo}) => {
             setLoading(true)
         } else if(loading === false) {
             setLoading(false)
+            if(data[queryObject.query_tablename].length < LIMIT) {
+                setHasMore(false)
+            }
         }
     }, [loading])
 
@@ -134,6 +144,7 @@ export const Displayer = ({queryObject, shouldDisplayInfo}) => {
         console.log(response)
         if(response.length === 0){
             ToRender = (
+                <>
                 <Grid container className={classes.notFound}>
                     <Grid item xs={12} style={{textAlign: "center"}}>
                         <Typography variant="h4">
@@ -142,26 +153,49 @@ export const Displayer = ({queryObject, shouldDisplayInfo}) => {
                         </Typography>
                     </Grid>
                 </Grid>
+                </>
             )
         } else {
             ToRender = (
                 <>
                     <InfiniteScroll
                         dataLength={response.length}
-                        loader={<div>Loading</div>}
-                        hasMore={data.length % LIMIT !== 0 ? false : true}
-                        next={() => fetchMore({
+                        loader={
+                            <Grid container>
+                                <Grid item xs={12} style={{textAlign: 'center'}}>
+                                    <Typography className={classes.loading_display}>Loading</Typography>
+                                </Grid>
+                            </Grid>
+                        }
+                        hasMore={hasMore}
+                        endMessage={<></>}
+                        next={() => {
+                            const res = data[queryObject.query_tablename].length / LIMIT
+                            console.log(`SKIP: ${res} | ${Math.floor(res)}`)
+                            return fetchMore({
                             variables: {
-                                skip: Math.floor(data.length / LIMIT),
-                                limit: LIMIT,
-                                type: queryObject.query_params
+                                options: {
+                                    skip: res,
+                                    limit: LIMIT,
+                                    type: queryObject.query_params
+                                }
                             }, updateQuery: (prev, { fetchMoreResult }) => {
-                                if (!fetchMoreResult) return prev;
-                                return Object.assign({}, prev, {
-                                feed: [...prev[queryObject.query_table_name], ...fetchMoreResult[queryObject.query_table_name]]
-                                });
+                                if (!fetchMoreResult || !hasMore) return prev;
+                                console.log(prev)
+                                console.log(queryObject)
+                                console.log(fetchMoreResult)
+                                if(fetchMoreResult[queryObject.query_tablename].length < LIMIT) {
+                                    setHasMore(false)
+                                }
+                                return {
+                                    [queryObject.query_tablename]: [
+                                        ...prev[queryObject.query_tablename],
+                                        ...fetchMoreResult[queryObject.query_tablename]
+                                    ]
+                                }
                             }
-                        })}>
+                        })}
+                    }>
                         {response}
                     </InfiniteScroll>
                 </>

@@ -3,6 +3,7 @@ import {FONTS_HEAD} from 'App'
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles} from '@material-ui/styles'
 import IGMC from 'assets/images/IGMC.jpg'
+import { Footer } from 'components/Footer/Footer'
 
 const useStyles = makeStyles(theme => ({
     about: {
@@ -18,6 +19,7 @@ const About = () => {
     const classes = useStyles()
 
     return (
+        <>
         <Grid container>
             <Grid item xs={12} style={{textAlign: 'center'}}> 
                 <img src={IGMC} style={{borderRadius: "2px", maxWidth: "100%", filter: 'brightness(80%)'}} />
@@ -28,6 +30,7 @@ const About = () => {
                 </Typography>
             </Grid>
         </Grid>
+        </>
     )
 }
 

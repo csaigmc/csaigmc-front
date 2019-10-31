@@ -6,6 +6,7 @@ import gql from 'graphql-tag'
 import { Grid, Snackbar, TextField, Typography, Button, SnackbarContent, FormControl, FormHelperText } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import {green, red} from '@material-ui/core/colors'
+import { Footer } from 'components/Footer/Footer'
 
 const InputBox = ({label, value, onChange, name, placeholder}) => {
     return (
@@ -92,6 +93,7 @@ const AddStudent = () => {
     }
 
     return (
+        <>
         <Grid container>
             <Snackbar anchorOrigin={{vertical: "top", horizontal: "right"}} open={showingMessage} autoHideDuration={1000} onClose={() => setShowingMessage(false)}>
                 <SnackbarContent 
@@ -183,6 +185,7 @@ const AddStudent = () => {
                 </form>
             </Grid>
         </Grid>
+        </>
     )
 }
 

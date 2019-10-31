@@ -8,24 +8,26 @@ import { usePageLoadingContext } from 'context'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Grid, makeStyles, Typography, Dialog, AppBar, Toolbar, IconButton, Icon, Container } from '@material-ui/core'
 import Slide from '@material-ui/core/Slide';
+import { Footer } from './Footer/Footer'
 
 const infoStyles = makeStyles(theme => ({
     infoContainer: { 
         padding: theme.spacing(1),
-        border: `1px solid ${theme.palette.grey[700]}`,
+        border: `1px solid transparent`,
         borderRadius: "0px",
         overflow: "hidden",
         transition: "0.14s all ease-in-out",
-        border: `1px solid transparent`,
         "&:hover": {
             backgroundColor: theme.palette.grey[800],
             border: `1px solid ${theme.palette.grey[700]}`,
             boxShadow: theme.shadows[3]
-        }
+        },
+        marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(1) 
     },
     imazo: {
         width: '100%',
-        height: "240px",
+        height: "180px",
         objectFit: "cover",
         [theme.breakpoints.down('md')]: {
             height: '180px',
@@ -202,12 +204,18 @@ const DisplayStyle = makeStyles(theme => ({
         color: theme.palette.grey[600],
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5)
+    },
+    loading_display: {
+        fontFamily: FONTS_HEAD,
+        fontSize: '16px',
+        color: theme.palette.grey[400]
     }
 }))
 
 export const ArticleDisplayer = ({queryObject, shouldDisplayInfo}) => {
 
     const classes = DisplayStyle()
+    const [hasMore, setHasMore] = useState(true)
 
     const {data, error, loading, fetchMore} = useQuery(queryObject.query_query, {
         variables: {
@@ -227,20 +235,23 @@ export const ArticleDisplayer = ({queryObject, shouldDisplayInfo}) => {
             setLoading(true)
         } else if(loading === false) {
             setLoading(false)
+            if(data[queryObject.query_tablename].length < LIMIT){
+                setHasMore(false)
+            }
         }
     }, [loading])
 
     let ToRender
     const makeResponse = () => {
-        const items = data[queryObject.query_table_name].map((item, index) => {
+        const items = data[queryObject.query_tablename].map((item, index) => {
             return (
                 <InfoCard showInfo={shouldDisplayInfo} info={item} key={index} handleClick={() => setShowingDetails(index)}/>
             )
         })
         const result = []
-        for(let i = 0; i < data[queryObject.query_table_name].length; i+=STEPPER){
+        for(let i = 0; i < data[queryObject.query_tablename].length; i+=STEPPER){
             const ti = []
-            for(let j = 0; j < STEPPER && (i + j) < data[queryObject.query_table_name].length; ++j){
+            for(let j = 0; j < STEPPER && (i + j) < data[queryObject.query_tablename].length; ++j){
                 ti.push(items[i+j])
             }
             result.push(<Grid container>{ti}</Grid>)
@@ -267,6 +278,7 @@ export const ArticleDisplayer = ({queryObject, shouldDisplayInfo}) => {
         console.log(response)
         if(response.length === 0){
             ToRender = (
+                <>
                 <Grid container className={classes.notFound}>
                     <Grid item xs={12} style={{textAlign: "center"}}>
                         <Typography variant="h4">
@@ -275,24 +287,38 @@ export const ArticleDisplayer = ({queryObject, shouldDisplayInfo}) => {
                         </Typography>
                     </Grid>
                 </Grid>
+                </>
             )
         } else {
             ToRender = (
                 <>
                     <InfiniteScroll
                         dataLength={response.length}
-                        loader={<div>Loading</div>}
-                        hasMore={data.length % LIMIT !== 0 ? false : true}
+                        loader={<Grid container>
+                            <Grid item xs={12} style={{textAlign: 'center'}}>
+                                <Typography className={classes.loading_display}>Loading</Typography>
+                            </Grid>
+                        </Grid>}
+                        endMessage={<></>}
+                        hasMore={hasMore}
                         next={() => fetchMore({
                             variables: {
-                                skip: Math.floor(data.length / LIMIT),
-                                limit: LIMIT,
-                                type: queryObject.query_params
+                                options: {
+                                    skip: (data.length / LIMIT),
+                                    limit: LIMIT,
+                                    type: queryObject.query_params
+                                }
                             }, updateQuery: (prev, { fetchMoreResult }) => {
-                                if (!fetchMoreResult) return prev;
-                                return Object.assign({}, prev, {
-                                feed: [...prev[queryObject.query_table_name], ...fetchMoreResult[queryObject.query_table_name]]
-                                });
+                                if (!fetchMoreResult || !hasMore) return prev;
+                                if(fetchMoreResult[queryObject.query_tablename].length < LIMIT) {
+                                    setHasMore(false)
+                                }
+                                return {
+                                    [queryObject.query_tablename]: [
+                                        ...prev[queryObject.query_tablename],
+                                        ...fetchMoreResult[queryObject.query_tablename]
+                                    ]
+                                }
                             }
                         })}>
                         {response}
@@ -304,7 +330,7 @@ export const ArticleDisplayer = ({queryObject, shouldDisplayInfo}) => {
     return (
         <>
             {ToRender}
-            <DetailsRenderer showing={showingDetails >= 0} info={showingDetails >= 0 ? data[queryObject.query_table_name][showingDetails] : null} handleClose={() => setShowingDetails(-1)}/>
+            <DetailsRenderer showing={showingDetails >= 0} info={showingDetails >= 0 ? data[queryObject.query_tablename][showingDetails] : null} handleClose={() => setShowingDetails(-1)}/>
         </>
     )
 }

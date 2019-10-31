@@ -26,7 +26,7 @@ const ISIS = () => {
                 <ArticleDisplayer 
                     queryObject={{
                         query_query: ISIS_QUERY,
-                        query_table_name: "allArticles",
+                        query_tablename: "allArticles",
                         query_params: "isis"
                     }}/>
             </Grid>

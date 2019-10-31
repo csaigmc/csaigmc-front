@@ -4,8 +4,9 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
-import { makeStyles, Grid, Divider, Link } from '@material-ui/core'
+import { makeStyles, Grid, Typography, Link } from '@material-ui/core'
 import { FONTS_HEAD } from 'App'
+import { Footer } from 'components/Footer/Footer'
 
 
 const AddStudent = lazy(() => import('components/Notifications/AddStudent'))
@@ -57,7 +58,12 @@ const notifStyles = makeStyles(theme => ({
         '&:hover': {
             color: theme.palette.secondary.light
         }
-    }
+    },
+    notFound: {
+        color: theme.palette.grey[600],
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(5)
+    },
 }))
 
 const MyNotifs = () => {
@@ -66,6 +72,7 @@ const MyNotifs = () => {
     
     const {data, loading, error, fetchMore} = useQuery(GET_NOTIFICATIONS)
     const {setLoading} = usePageLoadingContext()
+    const [hasMore, setHasMore] = useState(true)
 
     const LIMIT = 20
 
@@ -74,6 +81,9 @@ const MyNotifs = () => {
             setLoading(true)
         } else {
             setLoading(false)
+            if(data.allNotifications.length < LIMIT) {
+                setHasMore(false)
+            }
         }
     }, [loading])
     
@@ -86,40 +96,70 @@ const MyNotifs = () => {
             </Grid>
         )
     }
-    if(data) {
-        ToRender = (
-            <InfiniteScroll
-                dataLength={data.allNotifications.length}
-                next={() => fetchMore({
-                    variables: {
-                        options: {
-                            skip: (data.allNotifications.length % LIMIT),
-                            limit: LIMIT
+
+    else if(data) {
+        if(data.allNotifications.length < 1){
+            ToRender = (<>
+                <Grid container className={classes.notFound}>
+                    <Grid item xs={12} style={{textAlign: "center"}}>
+                        <Typography variant="h4">
+                            -\_(^_^)_/- <br /><br />
+                            Nothing Found
+                        </Typography>
+                    </Grid>
+                </Grid>
+                </>)
+        } else {
+            ToRender = (
+                <InfiniteScroll
+                    dataLength={data.allNotifications.length}
+                    endMessage={<></>}
+                    hasMore={hasMore}
+                    next={() => fetchMore({
+                        variables: {
+                            options: {
+                                skip: (data.allNotifications.length % LIMIT),
+                                limit: LIMIT
+                            }
+                        },
+                        updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult || !hasMore) return prev;
+                            console.log(prev)
+                            console.log(fetchMoreResult)
+                            if(fetchMoreResult.allNotifications.length < LIMIT) {
+                                setHasMore(false)
+                            }
+                            return {
+                                allNotifications: [
+                                    ...prev.allNotifications,
+                                    ...fetchMoreResult.allNotifications
+                                ]
+                            }
                         }
-                    }
-                })}>
-            { 
-                data.allNotifications.map((item, index) => {
+                    })}>
+                { 
+                    data.allNotifications.map((item, index) => {
 
-                    const date = new Date()
-                    date.setTime(item.create_date)
-                    const day = date.getUTCDate()
-                    const mon = date.getMonth() + 1
-                    const year = date.getFullYear()
-                    const fdate = `${mon}/${day}/${year}`
+                        const date = new Date()
+                        date.setTime(item.create_date)
+                        const day = date.getUTCDate()
+                        const mon = date.getMonth() + 1
+                        const year = date.getFullYear()
+                        const fdate = `${mon}/${day}/${year}`
 
-                    return (
-                        <Grid container className={`${classes.notif} ${classes.rounders}`} xs={12}>
-                            <Grid item className={`${classes.notifItem} ${classes.undisplay}`} xs={12} md={1} lg={1}>{index}</Grid>
-                            <Grid item className={classes.notifItem} xs={12} md={8} lg={9}>{item.notification_text}</Grid>
-                            <Grid item className={classes.notifItem} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
-                            <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}>More</Link></Grid>
-                        </Grid>
-                    )
-                })
-            }
-            </InfiniteScroll>
-        )
+                        return (
+                            <Grid container className={`${classes.notif} ${classes.rounders}`} xs={12}>
+                                <Grid item className={`${classes.notifItem} ${classes.undisplay}`} xs={12} md={1} lg={1}>{index}</Grid>
+                                <Grid item className={classes.notifItem} xs={12} md={8} lg={9}>{item.notification_text}</Grid>
+                                <Grid item className={classes.notifItem} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
+                                <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}>More</Link></Grid>
+                            </Grid>
+                        )
+                    })
+                }
+                </InfiniteScroll>
+            )
+        }
     } else if(error) {
         ToRender = <div>Error Loading..</div>
     }

@@ -5,7 +5,7 @@ import {FONTS_HEAD, FONTS_MAIN} from 'App'
 import './Navigation.css'
 import { Loading } from 'components/Loading'
 import { usePageLoadingContext } from 'context'
-import IGMCAvatar from 'assets/images/igmc_menu.jpg'
+import IGMCAvatar from 'assets/images/IGMC.png'
 import { AppBar, Toolbar, IconButton, Icon, Typography, Drawer, List, ListSubheader, ListItem, ListItemText, Divider, Collapse, makeStyles, LinearProgress, ListItemAvatar, Avatar } from '@material-ui/core'
 
 const ustyles = makeStyles(theme => ({

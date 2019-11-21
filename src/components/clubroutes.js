@@ -6,7 +6,7 @@ const Arts = lazy(() => import('components/Clubs/Arts'))
 const Memers = lazy(() => import('components/Clubs/Memers'))
 
 export const clubroutes = {
-    "/enigma": () => <Enigma />,
+    // "/enigma": () => <Enigma />,
     "/memers": () => <Memers />,
     "/isis": () => <ISIS />,
     "/arts": () => <Arts />,

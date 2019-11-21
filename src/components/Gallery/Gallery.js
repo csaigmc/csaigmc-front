@@ -25,7 +25,8 @@ const Gallery = () => {
                         query_query: ADVISORY_QUERY,
                         query_params: "gallery",
                         query_tablename: "allArts"
-                    }}/>
+                    }}
+                    shouldDisplayInfo={true}/>
             </Grid>
         </Grid>
     )

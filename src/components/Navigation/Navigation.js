@@ -38,7 +38,8 @@ const paths = {
     '/notifications': "Notifications",
     '/gallery': 'Gallery',
     '/about': "About IGMC",
-    '/complaints': "Complaints"
+    '/complaints': "Complaints",
+    '/papers': "Papers"
 }
 
 const MenuItem = ({text, link}) => {
@@ -98,7 +99,8 @@ export const Navigation = () => {
                     'Home',
                     'Gallery',
                     'Notifications',
-                    'Complaints'
+                    'Complaints',
+                    'Papers'
                 ]).map((item, index) => {
                     return (
                         <ListItem button key={index} className={styles.listItem} component={A} href={`/${item.toLowerCase()}`}>
@@ -127,7 +129,7 @@ export const Navigation = () => {
                 <Collapse in={collapseOpen} timeout={'auto'}>
                     <List component="div" disablePadding>
                     {([
-                        'Enigma',
+                        // 'Enigma',
                         'ISIS',
                         'Memers',
                         'Arts'

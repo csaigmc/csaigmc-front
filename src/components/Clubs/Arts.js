@@ -23,7 +23,7 @@ const Arts = () => {
                 <Displayer
                     queryObject={{
                         query_query: ADVISORY_QUERY,
-                        query_params: "arts",
+                        query_params: "art",
                         query_tablename: "allArts"
                     }}
                     shouldDisplayInfo={true}/>

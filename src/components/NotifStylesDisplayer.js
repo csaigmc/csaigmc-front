@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
-import { makeStyles, Grid, Typography, Link } from '@material-ui/core'
+import { makeStyles, Grid, Typography, Link, Icon } from '@material-ui/core'
 import { FONTS_HEAD } from 'App'
 
 
@@ -160,7 +160,7 @@ export const NotifStyleDisplayer = ({queryObject}) => {
                                 <Grid item className={`${classes.notifItem} ${classes.undisplay}`} xs={12} md={1} lg={1}>{index+1}</Grid>
                                 <Grid item className={classes.notifItem} xs={12} md={8} lg={9}>{item.notification_text}</Grid>
                                 <Grid item className={classes.notifItem} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
-                                <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}>More</Link></Grid>
+                                <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}><Icon>launch</Icon></Link></Grid>
                             </Grid>
                         )
                     })

@@ -38,6 +38,42 @@ const infoStyles = makeStyles(theme => ({
     }
 }))
 
+const UserInfoCard = ({showInfo, info}) => {
+    const classes = infoStyles()
+
+    console.log("called User Card")
+
+    return (
+        <Grid item xs={12} sm={6} md={3} className={classes.infoContainer}>
+            <img className={classes.imazo} src={info.url_path} />
+            {
+                showInfo ? <Grid container>
+                    <Grid item xs={12} style={{paddingTop: "8px"}}>
+                        <Typography variant="h6" className={classes.info}>
+                            {info.user}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1" className={classes.subinfo}>
+                            {info.about_user}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle2" className={classes.subinfo}>
+                            {info.phone_no}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle2" className={classes.subinfo}>
+                            {info.email}
+                        </Typography>
+                    </Grid>
+                </Grid> : null
+            }
+        </Grid>
+    )
+}
+
 const InfoCard = ({showInfo, info}) => {
 
     const classes = infoStyles()
@@ -80,7 +116,7 @@ const DisplayStyle = makeStyles(theme => ({
     }
 }))
 
-export const Displayer = ({queryObject, shouldDisplayInfo}) => {
+export const Displayer = ({queryObject, shouldDisplayInfo, showContactInfo}) => {
 
     const classes = DisplayStyle()
     const [hasMore, setHasMore] = useState(true)
@@ -96,12 +132,14 @@ export const Displayer = ({queryObject, shouldDisplayInfo}) => {
     })
     const {setLoading} = usePageLoadingContext()
 
+    console.log(data)
+
     useEffect(() => {
         if(loading === true) {
             setLoading(true)
         } else if(loading === false) {
             setLoading(false)
-            if(data[queryObject.query_tablename].length < LIMIT) {
+            if(!data || data[queryObject.query_tablename].length < LIMIT) {
                 setHasMore(false)
             }
         }
@@ -109,15 +147,24 @@ export const Displayer = ({queryObject, shouldDisplayInfo}) => {
 
     let ToRender
     const makeResponse = () => {
-        const items = data.allArts.map((item, index) => {
+
+        console.log(data)
+        if(!data){
+            return []
+        }
+
+        const items = data[queryObject.query_tablename].map((item, index) => {
             return (
-                <InfoCard showInfo={shouldDisplayInfo} info={item} key={index}/>
+                showContactInfo === true ?
+                <UserInfoCard showInfo={shouldDisplayInfo} info={item} key={index} /> :
+                <InfoCard showInfo={shouldDisplayInfo} info={item} key={index} />
+                
             )
         })
         const result = []
-        for(let i = 0; i < data.allArts.length; i+=STEPPER){
+        for(let i = 0; i < data[queryObject.query_tablename].length; i+=STEPPER){
             const ti = []
-            for(let j = 0; j < STEPPER && (i + j) < data.allArts.length; ++j){
+            for(let j = 0; j < STEPPER && (i + j) < data[queryObject.query_tablename].length; ++j){
                 ti.push(items[i+j])
             }
             result.push(<Grid container>{ti}</Grid>)

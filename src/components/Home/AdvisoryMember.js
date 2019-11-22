@@ -7,10 +7,10 @@ import { Displayer } from '../Displayer'
 
 const ADVISORY_QUERY = gql`
 query allAdvisory($options: InpOptions) {
-    allArts(options: $options) {
+    allUsers(options: $options) {
         _id
-        creator
-        about_creator
+        user
+        about_user
         url_path
     }
 }
@@ -21,9 +21,10 @@ const MemberAdvisory = () => {
             queryObject={{
                 query_query: ADVISORY_QUERY,
                 query_params: "teacher",
-                query_tablename: "allArts"
+                query_tablename: "allUsers"
             }}
-            shouldDisplayInfo={true}/>
+            shouldDisplayInfo={true}
+            showContactInfo={true}/>
     )
 }
 

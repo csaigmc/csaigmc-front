@@ -9,9 +9,6 @@ import { FONTS_HEAD } from 'App'
 import { Footer } from 'components/Footer/Footer'
 import { NotifStyleDisplayer } from 'components/NotifStylesDisplayer'
 
-
-const AddStudent = lazy(() => import('components/Notifications/AddStudent'))
-
 const useStyles = makeStyles(theme => {
     root: {
         margin: theme.spacing(100)
@@ -22,7 +19,7 @@ const Papers = () => {
 
     let ToRender
 
-    ToRender = <NotifStyleDisplayer queryObject={{query_params: "papers"}} />
+    ToRender = <NotifStyleDisplayer queryObject={{query_params: "paper"}} />
     
     const styles = useStyles()
 

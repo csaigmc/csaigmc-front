@@ -39,7 +39,7 @@ const paths = {
     '/gallery': 'Gallery',
     '/about': "About IGMC",
     '/complaints': "Complaints",
-    '/papers': "Papers"
+    '/papers': "Papers & Books"
 }
 
 const MenuItem = ({text, link}) => {
@@ -100,7 +100,7 @@ export const Navigation = () => {
                     'Gallery',
                     'Notifications',
                     'Complaints',
-                    'Papers'
+                    'Papers & Books'
                 ]).map((item, index) => {
                     return (
                         <ListItem button key={index} className={styles.listItem} component={A} href={`/${item.toLowerCase()}`}>

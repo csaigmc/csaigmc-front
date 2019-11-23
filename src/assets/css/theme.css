@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap');
 .react-article-source img {
     display: block;
     margin-top: 16px;
@@ -15,4 +16,16 @@
     overflow: hidden;
     overflow-wrap: break-word;
     word-wrap: break-word;
+}
+
+
+.react-article-source blockquote {
+    /* font-family: 'Caveat', cursive; */
+    font-style: italic;
+    font-family: 'Patrick Hand', cursive;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: 100;
+    color: #d1d2d3;
+    border-left: 2px solid #ffc400;
 }

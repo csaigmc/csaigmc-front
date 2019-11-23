@@ -143,8 +143,8 @@ const Detailstyles = makeStyles(theme => ({
     text: {
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
-        color: theme.palette.grey[100]
-    },
+        color: theme.palette.grey[100],
+    } ,
     meta_info_container: {
         border: `1px solid ${theme.palette.grey[700]}`,
         backgroundColor: theme.palette.primary.dark,

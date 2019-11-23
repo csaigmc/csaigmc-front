@@ -18,6 +18,9 @@ const infoStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.primary.dark
         }
     },
+    imazo_gal: {
+        
+    },
     imazo: {
         width: '100%',
         height: "180px",

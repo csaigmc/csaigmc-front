@@ -22,7 +22,7 @@ const Home = () => {
 
     return (
         <Grid container>
-            <Tabs tabList={["Advisory", "Student"]} currentTab={currentTab} onChange={(index) => {
+            <Tabs tabList={["CSA Advisory", "CSA Members"]} currentTab={currentTab} onChange={(index) => {
                 setCurrentTab(index)
             }}/>
             <Grid container>

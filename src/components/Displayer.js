@@ -20,8 +20,8 @@ const infoStyles = makeStyles(theme => ({
     },
     imazo: {
         width: '100%',
-        height: "240px",
-        objectFit: "contain",
+        height: "280px",
+        objectFit: "cover",
         [theme.breakpoints.down('md')]: {
             height: '180px',
         }
@@ -42,6 +42,7 @@ const UserInfoCard = ({showInfo, info}) => {
     const classes = infoStyles()
 
     console.log("called User Card")
+    console.log(info)
 
     return (
         <Grid item xs={12} sm={6} md={3} className={classes.infoContainer}>

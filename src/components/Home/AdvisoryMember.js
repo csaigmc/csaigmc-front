@@ -11,6 +11,8 @@ query allAdvisory($options: InpOptions) {
         _id
         user
         about_user
+        phone_no
+        email
         url_path
     }
 }

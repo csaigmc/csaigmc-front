@@ -39,7 +39,8 @@ const paths = {
     '/gallery': 'Gallery',
     '/about': "About IGMC",
     '/complaints': "Complaints",
-    '/papers': "Papers & Books"
+    '/papers&books': "Papers & Books",
+    '/addstudent': "Add Student"
 }
 
 const MenuItem = ({text, link}) => {
@@ -100,10 +101,11 @@ export const Navigation = () => {
                     'Gallery',
                     'Notifications',
                     'Complaints',
-                    'Papers & Books'
+                    'Papers & Books',
+                    'Add Student'
                 ]).map((item, index) => {
                     return (
-                        <ListItem button key={index} className={styles.listItem} component={A} href={`/${item.toLowerCase()}`}>
+                        <ListItem button key={index} className={styles.listItem} component={A} href={`/${item.toLowerCase().split(" ").join("")}`}>
                             <ListItemText 
                                 disableTypography 
                                 primary={

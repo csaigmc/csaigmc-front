@@ -10,8 +10,6 @@ import { Footer } from 'components/Footer/Footer'
 import { NotifStyleDisplayer } from 'components/NotifStylesDisplayer'
 
 
-const AddStudent = lazy(() => import('components/Notifications/AddStudent'))
-
 const GET_NOTIFICATIONS = gql`
 query AllNotifications($options: InpOptions) {
     allNotifications(options: $options){
@@ -195,20 +193,12 @@ const Notifications = () => {
     const [currentTab, setCurrentTab] = useState(0)
 
     let ToRender
-    switch (currentTab) {
-        case 0:
-            ToRender = <NotifStyleDisplayer queryObject={{query_params: "notification"}}/>
-            break;
-        case 1:
-            ToRender = <AddStudent />
-            break;
-    }
+    ToRender = <NotifStyleDisplayer queryObject={{query_params: "notification"}}/>
 
     const styles = useStyles()
 
     return (
         <Grid container>
-            <Tabs tabList={["Notifications", "Add Student"]} currentTab={currentTab} onChange={(index) => setCurrentTab(index)} />
             {ToRender}
         </Grid>
     )

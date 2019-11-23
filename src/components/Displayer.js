@@ -20,7 +20,7 @@ const infoStyles = makeStyles(theme => ({
     },
     imazo: {
         width: '100%',
-        height: "280px",
+        height: "180px",
         objectFit: "cover",
         [theme.breakpoints.down('md')]: {
             height: '180px',

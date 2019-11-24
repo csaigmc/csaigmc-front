@@ -193,7 +193,7 @@ const Notifications = () => {
     const [currentTab, setCurrentTab] = useState(0)
 
     let ToRender
-    ToRender = <NotifStyleDisplayer queryObject={{query_params: "notification"}}/>
+    ToRender = <NotifStyleDisplayer queryObject={{query_params: "notification"}} displayNewBadge={true}/>
 
     const styles = useStyles()
 

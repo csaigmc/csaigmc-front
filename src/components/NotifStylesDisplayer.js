@@ -4,8 +4,9 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
-import { makeStyles, Grid, Typography, Link, Icon } from '@material-ui/core'
+import { makeStyles, Grid, Typography, Link, Icon, Badge } from '@material-ui/core'
 import { FONTS_HEAD } from 'App'
+import { fontSize } from '@material-ui/system'
 
 
 const GET_NOTIFICATIONS = gql`
@@ -61,9 +62,25 @@ const notifStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5)
     },
+    badge: {
+        backgroundColor: theme.palette.secondary.dark,
+        borderRadius: theme.spacing(4),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+        color: "#000000",
+        fontSize: "14px",
+        textTransform: "uppercase",
+        marginRight: theme.spacing(0.2)
+    }
 }))
 
-export const NotifStyleDisplayer = ({queryObject}) => {
+const isLessThanNDays = (date, N) => {
+    const currentTime = new Date()
+    const diff = currentTime - date
+    return ((diff / (1000 * 60 * 60 * 24)) <= N)
+}
+
+export const NotifStyleDisplayer = ({queryObject, displayNewBadge}) => {
 
     const classes = notifStyles()
 
@@ -157,10 +174,22 @@ export const NotifStyleDisplayer = ({queryObject}) => {
 
                         return (
                             <Grid container className={`${classes.notif} ${classes.rounders}`} xs={12}>
-                                <Grid item className={`${classes.notifItem} ${classes.undisplay}`} xs={12} md={1} lg={1}>{index+1}</Grid>
-                                <Grid item className={classes.notifItem} xs={12} md={8} lg={9}>{item.notification_text}</Grid>
+                                <Grid item className={`${classes.notifItem} ${classes.undisplay}`} xs={12} md={1} lg={1}>
+                                    {index + 1}
+                                </Grid>
+                                <Grid item className={classes.notifItem} xs={12} md={8} lg={9}>
+                                    {
+                                        displayNewBadge && isLessThanNDays(date, 7) ? 
+                                        <Typography display="inline" className={`${classes.badge}`}>New</Typography> : 
+                                        <></>
+                                    }
+                                    {item.notification_text}
+                                </Grid>
                                 <Grid item className={classes.notifItem} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
-                                <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}><Icon>launch</Icon></Link></Grid>
+                                {
+                                    (typeof(item.notification_url) === 'undefined' || item.notification_url === null || item.notification_url.length === 0) ? <></> :
+                                    <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}><Icon>launch</Icon></Link></Grid>
+                                }
                             </Grid>
                         )
                     })

@@ -102,7 +102,7 @@ export const Footer = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12} style={{textAlign: "center", paddingTop: "16px", paddingBottom: "16px"}}>
-                <Typography variant='body1' className={classes.fontmain} style={{textAlign: 'center', fontSize: "12px"}} >CopyRight &copy; 2019 CSAIGMC. All rights reserved.</Typography>
+                <Typography variant='body1' className={classes.fontmain} style={{textAlign: 'center', fontSize: "12px"}} >CopyRight &copy; 2019-20 CSAIGMC. All rights reserved.</Typography>
             </Grid>
         </Grid>
     )

@@ -13,7 +13,8 @@ import {createMuiTheme, makeStyles} from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles';
 import {amber, grey, blue} from '@material-ui/core/colors'
 import { Footer } from 'components/Footer/Footer';
-
+import useLocalStorage from 'components/useLocalStorage'
+import { availableColors, invertedMapColor } from 'cconstants';
 
 const client = new ApolloClient({
   uri: [BASE_URL, 'graphql'].join('/') 
@@ -77,7 +78,8 @@ const theme = [
 ]
 
 
-const themeConstruct = ({type, color}) => {
+const themeConstruct = ({type, ccolor}) => {
+  let color = availableColors[ccolor]
   return type == "light" ? createMuiTheme({
     palette: {
       type: "light",
@@ -136,13 +138,23 @@ const useStyles = makeStyles(theme => {
   }
 })
 
+const evaluateColorString = (item) => {
+  console.log(item)
+  if(typeof(item) == String) {
+    return availableColors[item]
+  } else {
+    return item
+  }
+}
+
 const App = () => {
 
+  const {getItem, setItem} = useLocalStorage()
   const styles = useStyles()
   let [currentTheme, setCurrentTheme] = useState(1)
   let [themeSettings, setThemeSettings] = useState({
-    type: "dark",
-    color: amber
+    type: getItem("type", 'dark'),
+    color: getItem("color", 'amber')
   })
 
   useRedirect('/', '/home')
@@ -155,13 +167,17 @@ const App = () => {
       ...themeSettings,
       [key]: value
     })
+    setItem(key, value)
 
   }
 
   console.log(themeSettings)
 
   return (
-    <ThemeProvider theme={themeConstruct(themeSettings)}>
+    <ThemeProvider theme={themeConstruct({
+      type: themeSettings['type'],
+      ccolor: themeSettings['color']
+    })}>
     <ApolloProvider client={client}>
       <Fragment>
         <Navigation currentSettings={themeSettings} onChangeSettings={HandleChangeTheme} />

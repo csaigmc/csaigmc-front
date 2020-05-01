@@ -9,7 +9,7 @@ import IGMCAvatar from 'assets/images/IGMC.png'
 import { AppBar, Toolbar, IconButton, Icon, Typography, Drawer, List, ListSubheader, ListItem, ListItemText, Divider, Collapse, makeStyles, LinearProgress, ListItemAvatar, Avatar } from '@material-ui/core'
 import Popover from '@material-ui/core/Popover';
 import {Grid} from '@material-ui/core'
-import {red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, amber} from '@material-ui/core/colors'
+import {availableColors} from 'cconstants'
 
 const ustyles = makeStyles(theme => ({
     root:{
@@ -63,10 +63,6 @@ const getPath = (path) => {
         return 'NotFound'
     }
 }
-
-const availableColors = [
-    red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, amber
-]
 
 const SettingsStyles = makeStyles(theme => ({
     title: {
@@ -141,11 +137,11 @@ const SettingsDialog = ({id, open, anchorEl, handleClose, currentSettings, onCha
                 </Grid>
                 <Grid item xs={9} style={{textAlign: "right", alignContent: "Center", display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
                     {
-                        availableColors.map((item, index) => {
-
+                        Object.keys(availableColors).map((item, index) => {
+                            let clr = availableColors[item]
                             return (
                                 <Typography className={`${classes.selectableColor} ${item == currentSettings.color ? classes.selectedColor : 
-                            ""}`} style={{backgroundColor: item[500]}} variant="subtitle1" component='button'  onClick={() => onChangeSettings("color", item)}> </Typography>            
+                            ""}`} style={{backgroundColor: clr[500]}} variant="subtitle1" component='button'  onClick={() => onChangeSettings("color", item)}> </Typography>            
                             )
                         })
                     }

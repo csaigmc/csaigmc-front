@@ -96,7 +96,7 @@ const SearchComplaints = () => {
     console.log(res.error)
 
     let ToRender
-    if(res.error){
+    if(res.error || res.data == null || res.data.complaint == null || res.data == undefined || res.data.complaint == undefined){
         ToRender = (
             <Grid container>
                 <Grid item xs={12} className={classes.error}>

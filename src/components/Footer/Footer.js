@@ -8,7 +8,7 @@ import IGMCImage from 'assets/images/IGMC.png'
 const useStyles = makeStyles(theme => ({
     fontmain: {
         fontFamily: FONTS_HEAD,
-        color: theme.palette.grey[500]
+        color: theme.textColor.main
     },
     padder: {
         marginTop: theme.spacing(4),
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.dark
     },
     followus: {
-        color: theme.palette.grey[400],
+        color: theme.textColor.dark,
         textAlign: "center",
         [theme.breakpoints.up('md')]: {
             paddingLeft: '16px',
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     },
     imagelogo: {
         borderRadius: '98px',
-        background: theme.palette.primary.main,
+        background: theme.palette.grey[400],
         padding: '4px',
         width: 128,
         height: 128

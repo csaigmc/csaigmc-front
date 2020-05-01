@@ -1,4 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=IM+Fell+French+Canon&display=swap');
+
+@font-face {
+    font-family: "Guanine";
+    src: url('./guanine.ttf');
+}
+
+@font-face {
+    font-family: "Calligrafiti";
+    src: url("./Calligraffiti.ttf");
+}
+
 .react-article-source img {
     display: block;
     margin-top: 16px;
@@ -20,12 +32,22 @@
 
 
 .react-article-source blockquote {
-    /* font-family: 'Caveat', cursive; */
-    font-style: italic;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Calligrafiti', cursive;
+    /* font-style: italic; */
+    /* font-family: 'IM Fell French Canon', serif; */
     padding: 12px;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: 500;
+    position: relative;
+}
+
+.react-article-source blockquote::before {
+    font-family: 'Guanine', cursive;
+    content: "\2018";
+    position: absolute;
+    font-size: 172px;
     font-weight: 100;
-    color: #d1d2d3;
-    border-left: 2px solid #ffc400;
+    top: 0px;
+    left: 0px;
+    color: #0000002f;
 }

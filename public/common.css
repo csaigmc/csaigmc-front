@@ -11,3 +11,18 @@ body, html {
 a {
     text-decoration: none !important;
 }
+
+::selection {
+    color: none;
+    background: none;
+  }
+
+
+button::selection {
+    color: none;
+    background-color: none;
+}
+
+* {
+    outline: none;
+}

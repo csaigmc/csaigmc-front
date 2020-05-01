@@ -14,13 +14,13 @@ const infoStyles = makeStyles(theme => ({
     infoContainer: { 
         padding: theme.spacing(1),
         border: `1px solid transparent`,
-        borderRadius: "0px",
+        borderRadius: "1px",
         overflow: "hidden",
         transition: "0.14s all ease-in-out",
         "&:hover": {
-            backgroundColor: theme.palette.grey[800],
-            border: `1px solid ${theme.palette.grey[700]}`,
-            boxShadow: theme.shadows[3]
+            backgroundColor: theme.palette.primary.dark,
+            border: `1px solid ${theme.palette.primary.light}`,
+            // boxShadow: theme.shadows[2]
         },
         marginBottom: theme.spacing(1),
         marginTop: theme.spacing(1) 
@@ -36,7 +36,7 @@ const infoStyles = makeStyles(theme => ({
     title: {
         fontFamily: FONTS_HEAD,
         fontWeight: "bold",
-        color: '#fff',
+        color: theme.textColor.main,
         textTransform: 'uppercase',
         overflow: 'hidden',
         textOverflow: "ellipsis",
@@ -45,12 +45,12 @@ const infoStyles = makeStyles(theme => ({
     info: {
         fontFamily: FONTS_HEAD,
         fontSize: '16px',
-        color: theme.palette.grey[100]
+        color: theme.textColor.main
     },
     subinfo: {
         fontFamily: FONTS_HEAD,
         fontSize: '12px',
-        color: theme.palette.grey[400]        
+        color: theme.textColor.dark        
     }
 }))
 
@@ -124,16 +124,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Detailstyles = makeStyles(theme => ({
     title: {
         fontFamily: FONTS_HEAD,
-        color: theme.palette.grey[300]
+        color: "inherit"
     },
     aboutAuthor: {
         fontFamily: FONTS_HEAD,
-        color: theme.palette.grey[400],
+        color: theme.textColor.dark,
         fontSize: "14px"
     },
     author: {
         fontFamily: FONTS_HEAD,
-        color: theme.palette.grey[400],
+        color: theme.textColor.light,
         fontSize: "14px"
     },
     error:{
@@ -143,13 +143,13 @@ const Detailstyles = makeStyles(theme => ({
     text: {
         paddingTop: theme.spacing(3),
         paddingBottom: theme.spacing(3),
-        color: theme.palette.grey[100],
+        color: theme.textColor.main,
     } ,
     meta_info_container: {
-        border: `1px solid ${theme.palette.grey[700]}`,
+        border: `1px solid ${theme.palette.primary.light}`,
         backgroundColor: theme.palette.primary.dark,
         padding: theme.spacing(2),
-        borderRadius: "0px"
+        borderRadius: "1px"
     }
 }))
 
@@ -162,7 +162,7 @@ const DetailsRenderer = ({showing, info, handleClose}) => {
         <Dialog fullScreen open={showing} TransitionComponent={Transition} onClose={() => handleClose()}>
             <AppBar position="fixed">
                 <Toolbar>
-                    <IconButton onClick={() => handleClose()}>
+                    <IconButton color="inherit" onClick={() => handleClose()}>
                         <Icon>close</Icon>
                     </IconButton>
                     <Typography className={classes.title} style={{paddingLeft: "8px"}}>{info ? info.title : 'Not Found'}</Typography>
@@ -173,9 +173,9 @@ const DetailsRenderer = ({showing, info, handleClose}) => {
                     info ?
                     <Grid container style={{paddingTop: "84px"}}>
                         <Grid item xs={12} className={classes.meta_info_container}>
-                            <Typography className={classes.aboutAuthor}>Created On: {dateFormatter(info.create_date)}</Typography>
                             <Typography className={classes.author}>Author: {info.author}</Typography>
                             <Typography className={classes.aboutAuthor}>About Author: {info.about_author}</Typography>
+                            <Typography className={classes.aboutAuthor}>Created On: {dateFormatter(info.create_date)}</Typography>
                         </Grid>
                         <Grid item xs={12} className={`react-article-source ${classes.text}`}>
                             <ReactMarkdown source={info.text} />

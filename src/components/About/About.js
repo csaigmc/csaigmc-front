@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     about: {
         fontFamily: FONTS_HEAD,
         paddingTop: theme.spacing(3),
-        color: theme.palette.grey[500],
+        color: theme.textColor.light,
         fontSize: "14px"
     }
 }))

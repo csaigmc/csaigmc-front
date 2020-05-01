@@ -67,7 +67,7 @@ const notifStyles = makeStyles(theme => ({
         borderRadius: theme.spacing(4),
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
-        color: "#000000",
+        color: theme.palette.primary.light,
         fontSize: "14px",
         textTransform: "uppercase",
         marginRight: theme.spacing(0.2)

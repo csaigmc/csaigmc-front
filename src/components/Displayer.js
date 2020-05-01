@@ -32,12 +32,12 @@ const infoStyles = makeStyles(theme => ({
     info: {
         fontFamily: FONTS_HEAD,
         fontSize: '16px',
-        color: theme.palette.grey[100]
+        color: theme.textColor.main
     },
     subinfo: {
         fontFamily: FONTS_HEAD,
         fontSize: '12px',
-        color: theme.palette.grey[400]        
+        color: theme.textColor.dark       
     }
 }))
 

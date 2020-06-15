@@ -7,6 +7,7 @@ import { usePageLoadingContext } from 'context'
 import { makeStyles, Grid, Typography, Link, Icon, Badge } from '@material-ui/core'
 import { FONTS_HEAD } from 'App'
 import { fontSize } from '@material-ui/system'
+import { NotifLoader } from './Loaders.js/NotifLoader'
 
 
 const GET_NOTIFICATIONS = gql`
@@ -24,8 +25,9 @@ const notifStyles = makeStyles(theme => ({
     notif: {
         padding: theme.spacing(1),
         background: theme.palette.primary.dark,
-        marginTop: '1px',
-        marginBottom: '1px',
+        marginTop: '4px',
+        marginBottom: '4px',
+        color: theme.palette.text.secondary,
         [theme.breakpoints.down('sm')]: {
             marginTop: '4px',
             marginBottom: '4px'
@@ -50,9 +52,15 @@ const notifStyles = makeStyles(theme => ({
         borderRadius: theme.spacing(1),
         overflow: "hidden"
     },
+    date: {
+        color: `${theme.palette.grey[600]}8f`,
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: '1rem'
+        }
+    },
     clickableLink: {
         fontFamily: FONTS_HEAD,
-        color: theme.palette.secondary.main,
+        color: `${theme.palette.secondary.dark}cf`,
         '&:hover': {
             color: theme.palette.secondary.light
         }
@@ -114,10 +122,7 @@ export const NotifStyleDisplayer = ({queryObject, displayNewBadge}) => {
     let ToRender
     if(loading){
         ToRender = (
-            <Grid container>
-                <Grid item xs={12}>                    
-                </Grid>
-            </Grid>
+            <NotifLoader />
         )
     }
 
@@ -185,7 +190,7 @@ export const NotifStyleDisplayer = ({queryObject, displayNewBadge}) => {
                                     }
                                     {item.notification_text}
                                 </Grid>
-                                <Grid item className={classes.notifItem} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
+                                <Grid item className={`${classes.notifItem} ${classes.date}`} style={{textAlign: 'left'}} xs={12} md={2} lg={1}>{fdate}</Grid>
                                 {
                                     (typeof(item.notification_url) === 'undefined' || item.notification_url === null || item.notification_url.length === 0) ? <></> :
                                     <Grid item className={classes.notifItem} xs={12} md={1} lg={1}><Link target="_blank" rel="noreferrer noopener" className={classes.clickableLink} href={item.notification_url}><Icon>launch</Icon></Link></Grid>

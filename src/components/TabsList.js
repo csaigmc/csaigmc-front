@@ -6,7 +6,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         fontFamily: FONTS_HEAD,
         marginLeft: theme.spacing(1),
-        fontWeight: 700
+    },
+    isSelected: {
+        fontWeight: "800"
     }
 }))
 
@@ -15,7 +17,7 @@ const Tab = ({text, isActive, onChange}) => {
     const classes = useStyles() 
 
     return (
-        <Chip onClick={onChange} className={classes.root} label={text} variant={isActive ? "default": "outlined"} color={isActive ? "secondary" : "default"} />
+        <Chip onClick={onChange} className={`${classes.root} ${isActive ? classes.isSelected : ""}`} label={text} variant={isActive ? "default": "outlined"} color={isActive ? "secondary" : "default"} />
     )
 }
 

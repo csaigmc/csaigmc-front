@@ -3,12 +3,11 @@ import 'assets/css/theme.css'
 import ReactMarkdown from 'react-markdown'
 import { useQuery } from '@apollo/react-hooks'
 import {FONTS_HEAD} from 'App'
-import gql from 'graphql-tag'
 import { usePageLoadingContext } from 'context'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Grid, makeStyles, Typography, Dialog, AppBar, Toolbar, IconButton, Icon, Container } from '@material-ui/core'
 import Slide from '@material-ui/core/Slide';
-import { Footer } from './Footer/Footer'
+import { ArticleLoader } from './Loaders.js/ArticleLoader'
 
 const infoStyles = makeStyles(theme => ({
     infoContainer: { 
@@ -121,6 +120,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Detailstyles = makeStyles(theme => ({
+    toolbar: {
+        boxShadow: theme.shadows[0],
+        borderBottom: `1px solid ${theme.palette.grey[200]}5f`
+    },
     title: {
         fontFamily: FONTS_HEAD,
         color: "inherit"
@@ -160,7 +163,7 @@ const DetailsRenderer = ({showing, info, handleClose}) => {
     return (
         <Dialog fullScreen open={showing} TransitionComponent={Transition} onClose={() => handleClose()}>
             <AppBar position="fixed">
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <IconButton color="inherit" onClick={() => handleClose()}>
                         <Icon>close</Icon>
                     </IconButton>
@@ -261,11 +264,7 @@ export const ArticleDisplayer = ({queryObject, shouldDisplayInfo}) => {
 
     if(loading) {
         ToRender = (
-            <Grid container className={classes.notFound}>
-                <Grid item xs={12} style={{textAlign: "center"}}>
-                    <Typography variant="h4">Loading...</Typography>
-                </Grid>
-            </Grid>
+            <ArticleLoader />
         )
     }
     else if(error) {

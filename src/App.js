@@ -20,63 +20,8 @@ const client = new ApolloClient({
   uri: [BASE_URL, 'graphql'].join('/') 
 })
 
-export const FONTS_HEAD = ['Comfortaa', 'roboto', 'cursive'].join(',')
+export const FONTS_HEAD = ['Archia', 'roboto', 'cursive'].join(',')
 export const FONTS_MAIN = ['Roboto', 'sans-serif'].join(',')
-
-const theme = [
-    createMuiTheme({
-    palette: {
-      type: "dark",
-      primary: {
-        light: grey[600],
-        main: grey[800],
-        dark: grey[900]
-      },
-      secondary: amber
-    },
-    typography: {
-      h1: { fontFamily: FONTS_HEAD},
-      h2: { fontFamily: FONTS_HEAD},
-      h3: { fontFamily: FONTS_HEAD},
-      h4: { fontFamily: FONTS_HEAD},
-      h5: { fontFamily: FONTS_HEAD},
-      h6: { fontFamily: FONTS_HEAD},
-      button: { fontFamily: FONTS_HEAD},
-    },
-    textColor: {
-      light: grey[50],
-      main: grey[200],
-      dark: grey[400],
-    }
-  }),
-  createMuiTheme({
-    palette: {
-      type: "light",
-      primary: {
-        light: grey[50],
-        main: blue[800],
-        dark: grey[200]
-      },
-      secondary: blue
-    },
-    typography: {
-      h1: { fontFamily: FONTS_HEAD},
-      h2: { fontFamily: FONTS_HEAD},
-      h3: { fontFamily: FONTS_HEAD},
-      h4: { fontFamily: FONTS_HEAD},
-      h5: { fontFamily: FONTS_HEAD},
-      h6: { fontFamily: FONTS_HEAD},
-      button: { fontFamily: FONTS_HEAD},
-    },
-    textColor: {
-      light: grey[900],
-      main: grey[800],
-      dark: grey[600],
-    }
-  })
-
-]
-
 
 const themeConstruct = ({type, ccolor}) => {
   let color = availableColors[ccolor]
@@ -91,13 +36,7 @@ const themeConstruct = ({type, ccolor}) => {
       secondary: color
     },
     typography: {
-      h1: { fontFamily: FONTS_HEAD},
-      h2: { fontFamily: FONTS_HEAD},
-      h3: { fontFamily: FONTS_HEAD},
-      h4: { fontFamily: FONTS_HEAD},
-      h5: { fontFamily: FONTS_HEAD},
-      h6: { fontFamily: FONTS_HEAD},
-      button: { fontFamily: FONTS_HEAD},
+      fontFamily: FONTS_HEAD
     },
     textColor: {
       light: grey[900],
@@ -116,13 +55,7 @@ const themeConstruct = ({type, ccolor}) => {
       secondary: color
     },
     typography: {
-      h1: { fontFamily: FONTS_HEAD},
-      h2: { fontFamily: FONTS_HEAD},
-      h3: { fontFamily: FONTS_HEAD},
-      h4: { fontFamily: FONTS_HEAD},
-      h5: { fontFamily: FONTS_HEAD},
-      h6: { fontFamily: FONTS_HEAD},
-      button: { fontFamily: FONTS_HEAD},
+      fontFamily: FONTS_HEAD
     },
     textColor: {
       light: grey[50],
@@ -153,25 +86,25 @@ const App = () => {
   const styles = useStyles()
   let [currentTheme, setCurrentTheme] = useState(1)
   let [themeSettings, setThemeSettings] = useState({
-    type: getItem("type", 'dark'),
-    color: getItem("color", 'amber')
+    type: 'dark',
+    color: 'cyan'
   })
 
   useRedirect('/', '/home')
   const routesResult = useRoutes(Routes)
 
   const HandleChangeTheme = (key, value) => {
-
-    console.log("onChangeSettings Called! - " + key + " " + value)
-    setThemeSettings({
-      ...themeSettings,
-      [key]: value
-    })
-    setItem(key, value)
+    // @Deprecated
+    // console.log("onChangeSettings Called! - " + key + " " + value)
+    // setThemeSettings({
+    //   ...themeSettings,
+    //   [key]: value
+    // })
+    // setItem(key, value)
 
   }
 
-  console.log(themeSettings)
+  // console.log(themeSettings)
 
   return (
     <ThemeProvider theme={themeConstruct({

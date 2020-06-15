@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Patrick+Hand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=IM+Fell+French+Canon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bellota&display=swap');
 
 @font-face {
     font-family: "Guanine";
     src: url('./guanine.ttf');
+}
+
+@font-face {
+    font-family: "Archia";
+    src: url('./archia-regular-webfont.ttf');
 }
 
 @font-face {
@@ -32,21 +38,20 @@
 
 
 .react-article-source blockquote {
-    font-family: 'Calligrafiti', cursive;
-    /* font-style: italic; */
-    /* font-family: 'IM Fell French Canon', serif; */
+    font-family: 'Bellota', cursive;
     padding: 12px;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
     position: relative;
+    color: #cccccc;
 }
 
 .react-article-source blockquote::before {
     font-family: 'Guanine', cursive;
-    content: "\2018";
+    content: "\2018\2018";
     position: absolute;
-    font-size: 172px;
-    font-weight: 100;
+    font-size: 64px;
+    font-weight: bold;
     top: 0px;
     left: 0px;
     padding: 0px;

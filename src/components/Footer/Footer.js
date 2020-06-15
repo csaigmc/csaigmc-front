@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
         fontFamily: FONTS_HEAD,
         color: theme.textColor.main
     },
+    copyRight: {
+        color: `${theme.textColor.main}3f`
+    },
     padder: {
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(2)
@@ -23,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primary.dark
     },
     followus: {
-        color: theme.textColor.dark,
+        color: `${theme.textColor.dark}6f`,
         textAlign: "center",
         [theme.breakpoints.up('md')]: {
             paddingLeft: '16px',
@@ -35,7 +38,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: 20,
         marginLeft: "6px",
         marginRight: "6px",
-        color: theme.palette.grey[400]
+        color: `${theme.palette.grey[400]}4f`
     },
     instagram : {
         '&:hover': {
@@ -53,13 +56,18 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '98px',
         background: theme.palette.grey[400],
         padding: '4px',
-        width: 128,
-        height: 128
+        width: 84,
+        height: 84,
+        marginRight: "1rem",
+        [theme.breakpoints.down('md')]: {
+            marginBottom: "8px",
+            marginRight: "auto"
+        }
     },
     divider: {
         textAlign: "center",
         [theme.breakpoints.up('md')]: {
-            borderRight: `1px solid ${theme.palette.grey[700]}`,
+            borderRight: `1px solid ${theme.palette.grey[700]}2f`,
             paddingRight: '16px',
             textAlign: "right"
         }
@@ -71,8 +79,8 @@ const useStyles = makeStyles(theme => ({
         display: "block",
         color: theme.palette.grey[700],
         [theme.breakpoints.up('md')]: {
-            display: 'inline'
-        }
+            display: 'inline',
+        },
     }
 })) 
 
@@ -92,17 +100,18 @@ export const Footer = () => {
             }
             <Grid item container>
                 <Grid item xs={12} md={6} className={`${path === '/home' ? classes.padder : ""} ${classes.divider}`}>
-                    <img className={classes.imagelogo} src={IGMCImage} alt="CSA IGMC LOGO" />            <Typography className={classes.logoText} variant="h5">CSA IGMC</Typography>    
+                    <img className={classes.imagelogo} src={IGMCImage} alt="CSA IGMC LOGO" />
+                    <Typography className={classes.logoText} variant="h6">CSA IGMC</Typography>    
                 </Grid>
                 <Grid item xs={12} md={6} className={`${path === '/home' ? classes.padder : ""} ${classes.followus}`}>
-                    <Typography variant="subtitle1" style={{fontFamily: "comfortaa"}}>Follow us on Social Media:</Typography> 
+                    <Typography variant="subtitle1" style={{fontFamily: FONTS_HEAD, fontSize: "12px"}}>Follow us on Social Media:</Typography> 
                     <Link className={`${classes.socialicon} ${classes.instagram}`} href="https://instagram.com/atelier_igmc?igshid=1ikxqwc1in0gp"><i className="fab fa-instagram"></i></Link>
                     <Link className={`${classes.socialicon}`} href="#"><i className="fab fa-twitter"></i></Link>
                     <Link className={`${classes.socialicon}`} href="#"><i className="fab fa-facebook-f "></i></Link>
                 </Grid>
             </Grid>
             <Grid item xs={12} style={{textAlign: "center", paddingTop: "16px", paddingBottom: "16px"}}>
-                <Typography variant='body1' className={classes.fontmain} style={{textAlign: 'center', fontSize: "12px"}} >CopyRight &copy; 2019-20 CSAIGMC. All rights reserved.</Typography>
+                <Typography variant='body1' className={classes.copyRight} style={{textAlign: 'center', fontSize: "12px"}} >CopyRight &copy; 2019-20 CSAIGMC. All rights reserved.</Typography>
             </Grid>
         </Grid>
     )

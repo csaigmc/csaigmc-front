@@ -7,6 +7,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { FONTS_HEAD } from 'App'
 import { makeStyles } from '@material-ui/styles'
 import { Footer } from './Footer/Footer'
+import { ImageLoader } from './Loaders.js/ImageLoader'
 
 const infoStyles = makeStyles(theme => ({
     infoContainer: {
@@ -15,7 +16,7 @@ const infoStyles = makeStyles(theme => ({
         overflow: "hidden",
         transition: "0.14s backgroundColor ease-in-out",
         "&:hover": {
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: `${theme.palette.primary.dark}2f`
         }
     },
     imazo_gal: {
@@ -31,13 +32,13 @@ const infoStyles = makeStyles(theme => ({
     },
     info: {
         fontFamily: FONTS_HEAD,
-        fontSize: '16px',
-        color: theme.textColor.main
+        fontSize: '1rem',
+        color: `${theme.textColor.main}7f`
     },
     subinfo: {
         fontFamily: FONTS_HEAD,
         fontSize: '12px',
-        color: theme.textColor.dark       
+        color: `${theme.textColor.dark}6f`       
     }
 }))
 
@@ -179,11 +180,7 @@ export const Displayer = ({queryObject, shouldDisplayInfo, showContactInfo}) => 
 
     if(loading) {
         ToRender = (
-            <Grid container className={classes.notFound}>
-                <Grid item xs={12} style={{textAlign: "center"}}>
-                    <Typography variant="h4">Loading...</Typography>
-                </Grid>
-            </Grid>
+            <ImageLoader />
         )
     }
     else if(error) {
@@ -214,7 +211,7 @@ export const Displayer = ({queryObject, shouldDisplayInfo, showContactInfo}) => 
                         loader={
                             <Grid container>
                                 <Grid item xs={12} style={{textAlign: 'center'}}>
-                                    <Typography className={classes.loading_display}>Loading</Typography>
+                                    <Typography className={classes.loading_display}>&bull; &bull; &bull;</Typography>
                                 </Grid>
                             </Grid>
                         }
